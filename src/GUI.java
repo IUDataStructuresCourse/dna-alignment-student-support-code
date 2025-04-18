@@ -24,7 +24,7 @@ import javax.swing.UIManager;
  */
 
 public class GUI extends JFrame {
-  
+
   static {
     try {
       UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
@@ -39,18 +39,18 @@ public class GUI extends JFrame {
       e.printStackTrace(System.out);
     }
   }
-  
+
   private JCheckBox showPath;
   private JLabel xLabel, yLabel;
   private JLabel[][] cells;
   private SequenceAligner strands;
-  
+
   public GUI(SequenceAligner strands) {
     setTitle(Constants.TITLE);
     this.strands = strands;
-    
+
     // Pad x and y with blanks on left to synchronize indices on the grid
-    String x = "  " + strands.getX(), y = "  " + strands.getY();
+    String x = "  " + strands.getS(), y = "  " + strands.getT();
     int numRows = x.length(); // Rows are labeled with chars in x
     int numCols = y.length(); // Cols are labeled with chars in y
 
@@ -59,7 +59,7 @@ public class GUI extends JFrame {
 
     // Set up the look and feel
     Font charFont = new Font("Courier", Font.BOLD, 28), scoreFont = new Font("Ariel", Font.PLAIN, 18);
-    
+
     cells = new JLabel[numRows][numCols];
     for (int row = 0; row < numRows; row++) {
       for (int col = 0; col < numCols; col++) {
@@ -92,19 +92,19 @@ public class GUI extends JFrame {
           if (row == 1 && col == 1)
             cell.setForeground(new Color(0, 180, 0));  // dark green
           if (row == numRows - 1 && col == numCols - 1)
-            cell.setForeground(Color.RED);    
+            cell.setForeground(Color.RED);
         }
         grid.add(cell);
       }
     }
-    
+
     grid.setPreferredSize(new Dimension(numCols * Constants.CELL_DIM, numRows * Constants.CELL_DIM));
     grid.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10)); // top, left, bottom, right
-        
+
     JPanel result = new JPanel();
     result.setLayout(new GridLayout(0, 1));
     result.setBorder(BorderFactory.createEmptyBorder(0, 40, 10, 0));
-    
+
     xLabel = new JLabel();
     yLabel = new JLabel();
     xLabel.setFont(new Font("Courier", Font.PLAIN, 22));
@@ -112,7 +112,7 @@ public class GUI extends JFrame {
     result.add(xLabel);
     result.add(yLabel);
     showAlignment();
-    
+
     JPanel controls = new JPanel();
     controls.add(result);
     controls.add(Box.createRigidArea(new Dimension(30, 0)));
@@ -121,17 +121,17 @@ public class GUI extends JFrame {
     showPath.setFocusPainted(false);
     showPath.addItemListener(e -> repaint());
     controls.add(showPath);
-    
+
     JPanel main = new JPanel(new BorderLayout());
     main.add(grid, BorderLayout.CENTER);
     main.add(controls, BorderLayout.SOUTH);
-    
+
     setContentPane(main);
     pack();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);
   }
-  
+
   /**
    * Paint the GUI.
    */
@@ -140,41 +140,41 @@ public class GUI extends JFrame {
     showCache();
     showAlignment();
   }
-  
+
   private void showCache() {
-    String x = strands.getX(), y = strands.getY();
+    String x = strands.getS(), y = strands.getT();
     int numRows = x.length() + 1;
     int numCols = y.length() + 1;
     for (int row = 1; row <= numRows; row++) {
-      for (int col = 1; col <= numCols; col++) {  
+      for (int col = 1; col <= numCols; col++) {
         JLabel cell = cells[row][col];
         Result result = strands.getResult(row - 1, col - 1);
-        if (result == null) 
+        if (result == null)
           cell.setToolTipText(String.format("[%d][%d]", row - 1, col - 1));
         else {
           cell.setToolTipText(result.getParent().toString());
           cell.setBackground(Constants.CELL_COLOR);
-          if (showPath.isSelected() && result.onPath())   
+          if (showPath.isSelected() && result.onPath())
             cell.setBackground(Constants.PATH_COLOR);
-          if (numRows <= Constants.MAX_CELLS && numCols <= Constants.MAX_CELLS) 
+          if (numRows <= Constants.MAX_CELLS && numCols <= Constants.MAX_CELLS)
             cell.setText(result.getScore() + "");
         }
       }
     }
   }
-  
+
   private void showAlignment() {
-    String x = strands.getAlignedX();
-    xLabel.setText("x: " + (x == null ? strands.getX() : x)); 
-    String y = strands.getAlignedY();
-    yLabel.setText("y: " + (y == null ? strands.getY() : y)); 
+    String x = strands.getAlignedS();
+    xLabel.setText("x: " + (x == null ? strands.getS() : x));
+    String y = strands.getAlignedT();
+    yLabel.setText("y: " + (y == null ? strands.getT() : y));
   }
-  
+
   /**
    * Context-sensitive menu that allows the user to change one nucleotide
    * in a strand.
    */
-  class ACTG extends JPopupMenu {    
+  class ACTG extends JPopupMenu {
     ACTG(JLabel cell, int row, int col) {
       for (int i = 0; i < 4; i++) {
         String nucleotide = "ACTG".substring(i, i + 1);
@@ -182,7 +182,7 @@ public class GUI extends JFrame {
         item.addActionListener(e -> {
           if (cell.getText().charAt(0) != nucleotide.charAt(0)) {
             cell.setText(nucleotide);
-            String x = strands.getX(), y = strands.getY();
+            String x = strands.getS(), y = strands.getT();
             if (col == 0)
               x = replaceChar(x, row - 2, nucleotide);
             else
@@ -197,7 +197,7 @@ public class GUI extends JFrame {
       }
     }
   }
-  
+
   /**
    * Replaces the character at position i in s with the string t.
    */

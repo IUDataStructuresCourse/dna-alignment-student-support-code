@@ -8,14 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentTest {
-  @Test
-  public void test() {
-    defaultJudgeTest();
-    customJudgeTest();
-    empties();
-    singletons();
-    // your tests go here
-  }
 
   @Test
   public void defaultJudgeTest() {
@@ -34,6 +26,7 @@ public class StudentTest {
   /**********************************************
    * Testing SequenceAligner.fillCache()
    **********************************************/
+
   @Test
   public void empties() {
     SequenceAligner sa;
@@ -71,13 +64,14 @@ public class StudentTest {
   /**********************************************
    * Testing SequenceAligner.traceback()
    **********************************************/
+
   @Test
   public void simpleAlignment() {
     SequenceAligner sa;
     sa = new SequenceAligner("ACGT", "ACGT");
     assertTrue(sa.isAligned());
-    assertEquals("ACGT", sa.getAlignedX());
-    assertEquals("ACGT", sa.getAlignedY());
+    assertEquals("ACGT", sa.getAlignedS());
+    assertEquals("ACGT", sa.getAlignedT());
   }
 
 }

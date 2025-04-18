@@ -2,29 +2,29 @@
  * TODO: Read through this code carefully because your cache in 
  * SequenceAligner will be made up of Result objects, and a Result 
  * contains a field of type Direction.
- * 
+ *
  * A Result represents the result of a subproblem that is stored
  * in the cache.
  */
 
 public class Result {
-  /** 
+  /**
    * The subproblem score. 
    */
-  private int score;          
-  
-  /**  
+  private int score;
+
+  /**
    * The direction of the neighboring entry in the cache from which this
    * entry is extended. (See definition of Direction below.)
    */
-  private Direction parent;   
-  
+  private Direction parent;
+
   /**
    * A flag indicating whether or not this subproblem is along the optimal
    * path.
    */
   private boolean mark = false;
-  
+
   /**
    * Creates an unmarked result with the given score and no parent.
    */
@@ -36,7 +36,7 @@ public class Result {
    * Creates an umarked result with the given score and parent.
    */
   public Result(int score, Direction parent) {
-    this.score = score; 
+    this.score = score;
     this.parent = parent;
   }
 
@@ -84,28 +84,28 @@ public class Result {
  * along the optimal path. If the largest score comes from an M operation
  * (i.e., a match or a mismatch), then the direction is DIAGONAL. If the
  * largest score comes from a D operation (i.e., a gap is inserted into
- * strand y), then the direction to the parent is UP. If the largest score
- * comes from an I operation (i.e., a gap is inserted into strand x), then
+ * strand T), then the direction to the parent is UP. If the largest score
+ * comes from an I operation (i.e., a gap is inserted into strand S), then
  * the direction to the parent is LEFT.
  */
 
-enum Direction { 
-  DIAGONAL { 
+enum Direction {
+  DIAGONAL {
     public String toString() {
       return "diag";
     }
-  }, 
-  LEFT { 
+  },
+  LEFT {
     public String toString() {
       return "left";
     }
-  }, 
-  UP { 
+  },
+  UP {
     public String toString() {
       return "up";
     }
   },
-  NONE { 
+  NONE {
     public String toString() {
       return "";
     }

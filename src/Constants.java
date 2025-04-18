@@ -9,7 +9,7 @@ public class Constants {
   public static final String TITLE = "Project 5: DNA Sequence Alignment";
 
   public static final char GAP_CHAR = '_';
-  
+
   public static final Color NUCLEOTIDE_COLOR = new Color(0, 0, 200);
   public static final Color PATH_COLOR = new Color(0xffff99);
   public static final Color CELL_COLOR = Color.WHITE;
@@ -22,5 +22,3 @@ public class Constants {
   public static final int MIN_CASES = 5;
   public static final int MAX_CASES = 100;
 }
-
-
