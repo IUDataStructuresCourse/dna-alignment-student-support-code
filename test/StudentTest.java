@@ -82,8 +82,7 @@ public class StudentTest {
   }
 
   /**
-   * Expand and write more tests. You might want to additionally test
-   * for cases commented out.
+   * TODO: Expand and write more tests.
    */
 
   @Test
