@@ -165,9 +165,9 @@ public class GUI extends JFrame {
 
   private void showAlignment() {
     String x = strands.getAlignedS();
-    xLabel.setText("x: " + (x == null ? strands.getS() : x));
+    xLabel.setText("S: " + (x == null ? strands.getS() : x));
     String y = strands.getAlignedT();
-    yLabel.setText("y: " + (y == null ? strands.getT() : y));
+    yLabel.setText("T: " + (y == null ? strands.getT() : y));
   }
 
   /**
